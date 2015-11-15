@@ -3,6 +3,9 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 import javax.swing.*;
+
+
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -12,6 +15,11 @@ public class Main extends JApplet {
 	public static void main(String args[]){
 		JFrame window = new JFrame("Simple Paint");
 	    PaintPanel content = new PaintPanel();
+	    SolidRectangles boxSolid = new SolidRectangles();
+	    EmptyRectangles boxEmpty = new EmptyRectangles();
+	    SolidOval ovalSolid = new SolidOval();
+	    EmptyOval ovalEmpty = new EmptyOval();
+	    
 	    //menu bar stuff
 	    JMenuBar b = new JMenuBar();
 	    JMenu file = new JMenu("File");
@@ -75,6 +83,10 @@ public class Main extends JApplet {
 	    leftToolBar.add(line);
 	    leftToolBar.add(freeDraw);
 	    
+	    
+	    
+	    
+	    
 	    //end toolbar
 	    
 	    window.setLayout(new BorderLayout());
@@ -86,6 +98,52 @@ public class Main extends JApplet {
 	    window.setLocation(200,200);
 	    window.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
 	    window.setVisible(true);
+	    
+	    
+	    filledRectangle.addActionListener(new ActionListener(){
+	    	public void actionPerformed(ActionEvent e){
+	    		window.remove(content);
+	    		window.remove(boxEmpty);
+	    		window.remove(ovalSolid);
+	    		window.revalidate();
+	    		window.repaint();
+	    		window.add(boxSolid, BorderLayout.CENTER);
+	    	}
+	    });
+	    
+	    emptyRectangle.addActionListener(new ActionListener(){
+	    	public void actionPerformed(ActionEvent e){
+	    		window.remove(content);
+	    		window.remove(boxSolid);
+	    		window.remove(ovalSolid);
+	    		window.revalidate();
+	    		window.repaint();
+	    		window.add(boxEmpty, BorderLayout.CENTER);
+	    	}
+	    });
+	    
+	    filledOval.addActionListener(new ActionListener(){
+	    	public void actionPerformed(ActionEvent e){
+	    		window.remove(content);
+	    		window.remove(boxSolid);
+	    		window.remove(boxEmpty);
+	    		window.revalidate();
+	    		window.repaint();
+	    		window.add(ovalSolid, BorderLayout.CENTER);
+	    	}
+	    });
+	    
+	    
+	    freeDraw.addActionListener(new ActionListener(){
+	    	public void actionPerformed(ActionEvent e){
+	    		window.remove(boxEmpty);
+	    		window.remove(boxSolid);
+	    		window.remove(ovalSolid);
+	    		window.revalidate();
+	    		window.repaint();
+	    		window.add(content, BorderLayout.CENTER);
+	    	}
+	    });
 	}
 	
 	public void init() {
