@@ -14,11 +14,14 @@ public class Main extends JApplet {
 	
 	public static void main(String args[]){
 		JFrame window = new JFrame("Simple Paint");
+		JPanel center = new JPanel();
+		
 	    PaintPanel content = new PaintPanel();
 	    SolidRectangles boxSolid = new SolidRectangles();
 	    EmptyRectangles boxEmpty = new EmptyRectangles();
 	    SolidOval ovalSolid = new SolidOval();
 	    EmptyOval ovalEmpty = new EmptyOval();
+	    Line line = new Line();
 	    
 	    //menu bar stuff
 	    JMenuBar b = new JMenuBar();
@@ -73,15 +76,17 @@ public class Main extends JApplet {
 	    JButton emptyRectangle = new JButton(new ImageIcon("emptyBox.jpg"));
 	    JButton filledOval = new JButton(new ImageIcon("filledOval.jpg"));
 	    JButton emptyOval = new JButton(new ImageIcon("emptyOval.jpg"));
-	    JButton line = new JButton(new ImageIcon("line.jpg"));
+	    JButton drawLine = new JButton(new ImageIcon("line.jpg"));
 	    JButton freeDraw = new JButton(new ImageIcon("freeDraw.png"));
+	    JButton clear = new JButton("Clear");
 	    
 	    leftToolBar.add(filledRectangle);
 	    leftToolBar.add(emptyRectangle);
 	    leftToolBar.add(filledOval);
 	    leftToolBar.add(emptyOval);
-	    leftToolBar.add(line);
+	    leftToolBar.add(drawLine);
 	    leftToolBar.add(freeDraw);
+	    leftToolBar.add(clear);
 	    
 	    
 	    
@@ -93,7 +98,8 @@ public class Main extends JApplet {
 	    window.add(b, BorderLayout.NORTH);
 	    window.add(leftToolBar, BorderLayout.WEST);
 	    /*window.setContentPane(content);*/
-	    window.add(content, BorderLayout.CENTER);
+	    window.add(center, BorderLayout.CENTER);
+	    center.setLayout(new BorderLayout());
 	    window.setSize(600,480);
 	    window.setLocation(200,200);
 	    window.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
@@ -102,46 +108,69 @@ public class Main extends JApplet {
 	    
 	    filledRectangle.addActionListener(new ActionListener(){
 	    	public void actionPerformed(ActionEvent e){
-	    		window.remove(content);
-	    		window.remove(boxEmpty);
-	    		window.remove(ovalSolid);
-	    		window.revalidate();
-	    		window.repaint();
-	    		window.add(boxSolid, BorderLayout.CENTER);
+	    		center.remove(content);
+	    		center.remove(boxEmpty);
+	    		center.remove(ovalSolid);
+	    		center.remove(line);
+	    		center.revalidate();
+	    		center.repaint();
+	    		center.add(boxSolid, BorderLayout.CENTER);
 	    	}
 	    });
 	    
 	    emptyRectangle.addActionListener(new ActionListener(){
 	    	public void actionPerformed(ActionEvent e){
-	    		window.remove(content);
-	    		window.remove(boxSolid);
-	    		window.remove(ovalSolid);
-	    		window.revalidate();
-	    		window.repaint();
-	    		window.add(boxEmpty, BorderLayout.CENTER);
+	    		center.remove(content);
+	    		center.remove(boxSolid);
+	    		center.remove(ovalSolid);
+	    		center.remove(line);
+	    		center.revalidate();
+	    		center.repaint();
+	    		center.add(boxEmpty, BorderLayout.CENTER);
 	    	}
 	    });
 	    
 	    filledOval.addActionListener(new ActionListener(){
 	    	public void actionPerformed(ActionEvent e){
-	    		window.remove(content);
-	    		window.remove(boxSolid);
-	    		window.remove(boxEmpty);
-	    		window.revalidate();
-	    		window.repaint();
-	    		window.add(ovalSolid, BorderLayout.CENTER);
+	    		center.remove(content);
+	    		center.remove(boxSolid);
+	    		center.remove(boxEmpty);
+	    		center.remove(line);
+	    		center.revalidate();
+	    		center.repaint();
+	    		center.add(ovalSolid, BorderLayout.CENTER);
+	    	}
+	    });
+	    
+	    drawLine.addActionListener(new ActionListener(){
+	    	public void actionPerformed(ActionEvent e){
+	    		center.remove(boxEmpty);
+	    		center.remove(boxSolid);
+	    		center.remove(ovalSolid);
+	    		center.remove(content);
+	    		center.revalidate();
+	    		center.repaint();
+	    		center.add(line, BorderLayout.CENTER);
 	    	}
 	    });
 	    
 	    
 	    freeDraw.addActionListener(new ActionListener(){
 	    	public void actionPerformed(ActionEvent e){
-	    		window.remove(boxEmpty);
-	    		window.remove(boxSolid);
-	    		window.remove(ovalSolid);
-	    		window.revalidate();
-	    		window.repaint();
-	    		window.add(content, BorderLayout.CENTER);
+	    		center.remove(boxEmpty);
+	    		center.remove(boxSolid);
+	    		center.remove(ovalSolid);
+	    		center.remove(line);
+	    		center.revalidate();
+	    		center.repaint();
+	    		center.add(content, BorderLayout.CENTER);
+	    	}
+	    });
+	    clear.addActionListener(new ActionListener(){
+	    	public void actionPerformed(ActionEvent e){
+	    		center.removeAll();
+	    		center.revalidate();
+	    		center.repaint();
 	    	}
 	    });
 	}
