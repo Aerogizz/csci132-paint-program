@@ -1,7 +1,12 @@
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Stack;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 
@@ -12,9 +17,19 @@ import javax.swing.*;
 
 public class Main extends JApplet {
 	
-	public static void main(String args[]){
+	public static void main(String args[]) throws IOException{
 		JFrame window = new JFrame("Simple Paint");
 		JPanel center = new JPanel();
+		center.setBackground(Color.WHITE);
+		
+		BufferedImage myPicture = ImageIO.read(new File("images/test.jpg"));
+		JLabel image = new JLabel(new ImageIcon(myPicture));
+		
+		/*ImageIcon image = new ImageIcon("images/test.jpg");
+		JLabel imageFile = new JLabel();*/
+		
+		
+		JPanel right = new JPanel();
 		
 	    PaintPanel content = new PaintPanel();
 	    SolidRectangles boxSolid = new SolidRectangles();
@@ -72,13 +87,13 @@ public class Main extends JApplet {
 	    
 	    //left side buttons/toolbar
 	    JToolBar leftToolBar = new JToolBar(null, JToolBar.VERTICAL);
-	    JButton filledRectangle = new JButton(new ImageIcon("filledBox.jpg"));
-	    JButton emptyRectangle = new JButton(new ImageIcon("emptyBox.jpg"));
-	    JButton filledOval = new JButton(new ImageIcon("filledOval.jpg"));
-	    JButton emptyOval = new JButton(new ImageIcon("emptyOval.jpg"));
-	    JButton drawLine = new JButton(new ImageIcon("line.jpg"));
-	    JButton freeDraw = new JButton(new ImageIcon("freeDraw.png"));
-	    JButton clear = new JButton("Clear");
+	    JButton filledRectangle = new JButton(new ImageIcon("images/buttons/filledBox.png"));
+	    JButton emptyRectangle = new JButton(new ImageIcon("images/buttons/emptyBox.png"));
+	    JButton filledOval = new JButton(new ImageIcon("images/buttons/filledOval.png"));
+	    JButton emptyOval = new JButton(new ImageIcon("images/buttons/emptyOval.png"));
+	    JButton drawLine = new JButton(new ImageIcon("images/buttons/line.png"));
+	    JButton freeDraw = new JButton(new ImageIcon("images/buttons/freeDraw.png"));
+	    JButton clear = new JButton(new ImageIcon("images/buttons/clear.png"));
 	    
 	    leftToolBar.add(filledRectangle);
 	    leftToolBar.add(emptyRectangle);
@@ -87,10 +102,51 @@ public class Main extends JApplet {
 	    leftToolBar.add(drawLine);
 	    leftToolBar.add(freeDraw);
 	    leftToolBar.add(clear);
+	    leftToolBar.setBackground(Color.LIGHT_GRAY);
+	    leftToolBar.setOpaque(true);
 	    
 	    
 	    
 	    
+	    //end toolbar
+	    
+	    
+	    //right side toolbar/buttons
+	    JToolBar rightToolBar = new JToolBar(null, JToolBar.VERTICAL);
+	    JButton blue = new JButton(new ImageIcon("images/buttons/blue.jpg"));
+	    blue.setBackground(Color.BLUE);
+	    blue.setOpaque(true);
+	    JButton green = new JButton(new ImageIcon("images/buttons/green.jpg"));
+	    green.setBackground(Color.GREEN);
+	    green.setOpaque(true);
+	    JButton red = new JButton(new ImageIcon("images/buttons/red.jpg"));
+	    red.setBackground(Color.RED);
+	    red.setOpaque(true);
+	    JButton yellow = new JButton(new ImageIcon("images/buttons/yellow.jpg"));
+	    yellow.setBackground(Color.YELLOW);
+	    yellow.setOpaque(true);
+	    JButton magenta = new JButton(new ImageIcon("images/buttons/magenta.jpg"));
+	    magenta.setBackground(Color.MAGENTA);
+	    magenta.setOpaque(true);
+	    JButton black = new JButton(new ImageIcon("images/buttons/black.jpg"));
+	    black.setBackground(Color.BLACK);
+	    black.setOpaque(true);
+	    JButton white = new JButton(new ImageIcon("images/buttons/white.jpg"));
+	    white.setBackground(Color.WHITE);
+	    white.setOpaque(true);
+	    
+	    
+	    rightToolBar.add(blue);
+	    rightToolBar.add(green);
+	    rightToolBar.add(red);
+	    rightToolBar.add(yellow);
+	    rightToolBar.add(magenta);
+	    rightToolBar.add(black);
+	    rightToolBar.add(white);
+	    right.setLayout(new BorderLayout());
+	    right.add(rightToolBar, BorderLayout.CENTER);
+	    rightToolBar.setBackground(Color.LIGHT_GRAY);
+	    rightToolBar.setOpaque(true);
 	    
 	    //end toolbar
 	    
@@ -99,78 +155,92 @@ public class Main extends JApplet {
 	    window.add(leftToolBar, BorderLayout.WEST);
 	    /*window.setContentPane(content);*/
 	    window.add(center, BorderLayout.CENTER);
+	    window.add(right, BorderLayout.EAST);
 	    center.setLayout(new BorderLayout());
-	    window.setSize(600,480);
+	    center.add(image, BorderLayout.CENTER);
+	    image.setLayout(new BorderLayout());
+	    window.setSize(600,515);
 	    window.setLocation(200,200);
 	    window.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
 	    window.setVisible(true);
-	    
-	    
+
+	   /* ArrayList<String> list = new ArrayList<String>();*/   
+	    /*Stack<String> stack = new Stack<>();*/
 	    filledRectangle.addActionListener(new ActionListener(){
 	    	public void actionPerformed(ActionEvent e){
-	    		center.remove(content);
-	    		center.remove(boxEmpty);
-	    		center.remove(ovalSolid);
-	    		center.remove(line);
-	    		center.revalidate();
-	    		center.repaint();
-	    		center.add(boxSolid, BorderLayout.CENTER);
+	    		image.removeAll();
+	    		SolidRectangles temp = new SolidRectangles();
+	    		/*stack.push(temp);
+	    		list.add("temp");*/
+	    		image.remove(temp);
+	    		image.revalidate();
+	    		image.repaint();
+	    		image.add(temp, BorderLayout.CENTER);
 	    	}
 	    });
 	    
 	    emptyRectangle.addActionListener(new ActionListener(){
 	    	public void actionPerformed(ActionEvent e){
-	    		center.remove(content);
-	    		center.remove(boxSolid);
-	    		center.remove(ovalSolid);
-	    		center.remove(line);
-	    		center.revalidate();
-	    		center.repaint();
-	    		center.add(boxEmpty, BorderLayout.CENTER);
+	    		image.removeAll();
+	    		/*image.remove(list.get(list.size()-1));*/
+	    		EmptyRectangles temp1 = new EmptyRectangles();
+	    		image.revalidate();
+	    		image.repaint();
+	    		image.add(temp1, BorderLayout.CENTER);
 	    	}
 	    });
 	    
 	    filledOval.addActionListener(new ActionListener(){
 	    	public void actionPerformed(ActionEvent e){
-	    		center.remove(content);
-	    		center.remove(boxSolid);
-	    		center.remove(boxEmpty);
-	    		center.remove(line);
-	    		center.revalidate();
-	    		center.repaint();
-	    		center.add(ovalSolid, BorderLayout.CENTER);
+	    		image.removeAll();
+	    		SolidOval temp = new SolidOval();
+	    		image.remove(temp);
+	    		image.revalidate();
+	    		image.repaint();
+	    		image.add(temp, BorderLayout.CENTER);
 	    	}
 	    });
 	    
+	    emptyOval.addActionListener(new ActionListener(){
+	    	public void actionPerformed(ActionEvent e){
+	    		image.removeAll();
+	    		EmptyOval temp = new EmptyOval();
+	    		image.remove(temp);
+	    		image.revalidate();
+	    		image.repaint();
+	    		image.add(temp, BorderLayout.CENTER);
+	    	}
+                        });
+	    
 	    drawLine.addActionListener(new ActionListener(){
 	    	public void actionPerformed(ActionEvent e){
-	    		center.remove(boxEmpty);
-	    		center.remove(boxSolid);
-	    		center.remove(ovalSolid);
-	    		center.remove(content);
-	    		center.revalidate();
-	    		center.repaint();
-	    		center.add(line, BorderLayout.CENTER);
+	    		image.removeAll();
+	    		Line temp = new Line();
+	    		image.remove(temp);
+	    		image.revalidate();
+	    		image.repaint();
+	    		image.add(temp, BorderLayout.CENTER);
 	    	}
 	    });
 	    
 	    
 	    freeDraw.addActionListener(new ActionListener(){
 	    	public void actionPerformed(ActionEvent e){
-	    		center.remove(boxEmpty);
-	    		center.remove(boxSolid);
-	    		center.remove(ovalSolid);
-	    		center.remove(line);
-	    		center.revalidate();
-	    		center.repaint();
-	    		center.add(content, BorderLayout.CENTER);
+	    		image.removeAll();
+	    		FreeDraw temp = new FreeDraw();
+	    		image.remove(temp);
+	    		image.revalidate();
+	    		image.repaint();
+	    		image.add(temp, BorderLayout.CENTER);
 	    	}
 	    });
+	    
+	    
 	    clear.addActionListener(new ActionListener(){
 	    	public void actionPerformed(ActionEvent e){
-	    		center.removeAll();
-	    		center.revalidate();
-	    		center.repaint();
+	    		image.removeAll();
+	    		image.revalidate();
+	    		image.repaint();
 	    	}
 	    });
 	}
@@ -178,7 +248,6 @@ public class Main extends JApplet {
 	public void init() {
 		setContentPane( new PaintPanel() );
 	}
-	
-	
-	
+
+
 }

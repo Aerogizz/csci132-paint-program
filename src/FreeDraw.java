@@ -2,10 +2,8 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.Line2D;
-import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 import javax.swing.JComponent;
@@ -14,13 +12,12 @@ import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
 
-public class Line extends JComponent implements MouseMotionListener, MouseListener{
-	ArrayList<Shape> shapes = new ArrayList<Shape>();
-    Point startDrag;
-    Point endDrag;
+public class FreeDraw extends JComponent implements MouseMotionListener, MouseListener{
+    Point point1;
+    Point point2;
     Line2D line2d;
     
-    public Line(){
+    public FreeDraw(){
     	super();
         addMouseListener(this);
         addMouseMotionListener(this);
@@ -30,18 +27,18 @@ public class Line extends JComponent implements MouseMotionListener, MouseListen
     public void paintComponent(Graphics g){
     	//super.paintComponent(g);
     	Graphics2D g2d = (Graphics2D) g;
-    	if(startDrag!=null && endDrag!=null){
+    	if(point1!=null && point2!=null){
     		g2d.setPaint(Color.BLACK);
-            g2d.setStroke(new BasicStroke(5.0f));
+            g2d.setStroke(new BasicStroke(1.5f));
             g2d.draw(line2d);
     	}
     }
     
     @Override
     public void mouseDragged(MouseEvent e) {
-    	endDrag = e.getPoint();
-        line2d = new Line2D.Double(startDrag, endDrag); 
-        //point1 = point2;  // add this line
+    	point2 = e.getPoint();
+        line2d = new Line2D.Double(point1, point2); 
+        point1 = point2;
         repaint();
     }
     
@@ -57,7 +54,7 @@ public class Line extends JComponent implements MouseMotionListener, MouseListen
     
     @Override
     public void mousePressed(MouseEvent e) {
-    	startDrag = e.getPoint();
+    	point1 = e.getPoint();
     }
     
     @Override
