@@ -27,22 +27,31 @@ public class Line extends JComponent implements MouseMotionListener, MouseListen
     }
     
     @Override
-    public void paintComponent(Graphics g){
+    public void paint(Graphics g){
     	//super.paintComponent(g);
     	Graphics2D g2d = (Graphics2D) g;
     	if(startDrag!=null && endDrag!=null){
     		g2d.setPaint(Color.BLACK);
             g2d.setStroke(new BasicStroke(5.0f));
+            g2d.setPaint(Color.LIGHT_GRAY);
             g2d.draw(line2d);
+            
+           
     	}
+        
+         for (Shape s : shapes) {
+                    g2d.setPaint(Color.BLACK);
+                    g2d.draw(s);
+                    //g2d.setPaint(colors[(colorIndex++) % 1]);
+        }
     }
     
     @Override
     public void mouseDragged(MouseEvent e) {
-    	endDrag = e.getPoint();
+        endDrag = e.getPoint();
         line2d = new Line2D.Double(startDrag, endDrag); 
-        //point1 = point2;  // add this line
         repaint();
+
     }
     
     @Override
@@ -62,7 +71,10 @@ public class Line extends JComponent implements MouseMotionListener, MouseListen
     
     @Override
     public void mouseReleased(MouseEvent e) {
-    	
+    	endDrag = e.getPoint();
+        line2d = new Line2D.Double(startDrag, endDrag); 
+        shapes.add(line2d);
+        repaint();
     }
     
     @Override

@@ -5,19 +5,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Stack;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
-
-
-
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+
 /*
-
-Programmed by Tyler Mattioli and Trevor Vannoy
-
+Program by Tyler Mattioli and Trevor Vannoy
 */
 
 public class Main extends JApplet {
