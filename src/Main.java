@@ -14,6 +14,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+/*
+
+Programmed by Tyler Mattioli and Trevor Vannoy
+
+*/
 
 public class Main extends JApplet {
 	
